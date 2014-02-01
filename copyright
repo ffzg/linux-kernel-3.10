@@ -1,7 +1,8 @@
 This is a prepackaged version of the Linux kernel binary image.
 
 This package was put together by Proxmox Server
-Solutions GmbH <support@proxmox.com>.
+Solutions GmbH <support@proxmox.com>, modifyed for FFZG by
+Luka Blaskovic <lblasc@znode.net>
 
 We use the RHEL7 kernel sources, available from:
 

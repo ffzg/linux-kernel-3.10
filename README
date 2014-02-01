@@ -9,6 +9,8 @@ ftp://ftp.redhat.com/redhat/rhel/
 Additional/Updated Modules:
 ---------------------------
 
+- include latest drbd module
+
 - include latest ixgbe driver from intel/sourceforge
 
 - include latest igb driver from intel/sourceforge

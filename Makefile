@@ -1,7 +1,7 @@
 RELEASE=3.1
 
 KERNEL_VER=3.10.0
-PKGREL=5
+PKGREL=6
 # also include firmware of previous versrion into 
 # the fw package:  fwlist-2.6.32-PREV-pve
 KREL=1
@@ -10,12 +10,13 @@ RHKVER=54.0.1.el7
 
 KERNELSRCRPM=kernel-${KERNEL_VER}-${RHKVER}.src.rpm
 
-EXTRAVERSION=-${KREL}-pve
-KVNAME=${KERNEL_VER}${EXTRAVERSION}
-PACKAGE=pve-kernel-${KVNAME}
-HDRPACKAGE=pve-headers-${KVNAME}
-
 ARCH=amd64
+
+EXTRAVERSION=-${KREL}-${ARCH}
+KVNAME=${KERNEL_VER}${EXTRAVERSION}
+PACKAGE=linux-image-${KVNAME}
+HDRPACKAGE=linux-headers-${KVNAME}
+
 GITVERSION:=$(shell cat .git/refs/heads/master)
 
 TOP=$(shell pwd)
@@ -28,7 +29,7 @@ KERNEL_CFG_ORG=${RHKERSRCDIR}/kernel-${KERNEL_VER}-x86_64.config
 
 FW_VER=1.1
 FW_REL=1
-FW_DEB=pve-firmware_${FW_VER}-${FW_REL}_all.deb
+FW_DEB=ffzg-firmware_${FW_VER}-${FW_REL}_all.deb
 
 DRBDDIR=drbd-8.4.4
 DRBDSRC=${DRBDDIR}.tar.gz
@@ -66,7 +67,7 @@ ARECASRC=${ARECADIR}.zip
 
 DST_DEB=${PACKAGE}_${KERNEL_VER}-${PKGREL}_${ARCH}.deb
 HDR_DEB=${HDRPACKAGE}_${KERNEL_VER}-${PKGREL}_${ARCH}.deb
-PVEPKG=proxmox-ve-${KERNEL_VER}
+PVEPKG=ffzg-ganeti-${KERNEL_VER}
 PVE_DEB=${PVEPKG}_${RELEASE}-${PKGREL}_all.deb
 
 all: check_gcc ${DST_DEB} ${FW_DEB} ${HDR_DEB}
@@ -81,7 +82,7 @@ ${DST_DEB}: data control.in postinst.in copyright changelog.Debian
 	chmod 0755 data/DEBIAN/postinst
 	install -D -m 644 copyright data/usr/share/doc/${PACKAGE}/copyright
 	install -D -m 644 changelog.Debian data/usr/share/doc/${PACKAGE}/changelog.Debian
-	echo "git clone git://git.proxmox.com/git/pve-kernel-3.2.0.git\\ngit checkout ${GITVERSION}" > data/usr/share/doc/${PACKAGE}/SOURCE
+	echo "git clone https://github.com/ffzg/ffzg-kernel-3.10.git\\ngit checkout ${GITVERSION}" > data/usr/share/doc/${PACKAGE}/SOURCE
 	gzip -f --best data/usr/share/doc/${PACKAGE}/changelog.Debian
 	rm -f data/lib/modules/${KVNAME}/source
 	rm -f data/lib/modules/${KVNAME}/build
@@ -250,7 +251,7 @@ ${HDR_DEB} hdr: .compile_mark headers-control.in headers-postinst.in
 	chmod 0755 $(headers_tmp)/DEBIAN/postinst
 	install -D -m 644 copyright $(headers_tmp)/usr/share/doc/${HDRPACKAGE}/copyright
 	install -D -m 644 changelog.Debian $(headers_tmp)/usr/share/doc/${HDRPACKAGE}/changelog.Debian
-	echo "git clone git://git.proxmox.com/git/pve-kernel-3.10.0.git\\ngit checkout ${GITVERSION}" > $(headers_tmp)/usr/share/doc/${HDRPACKAGE}/SOURCE
+	echo "git clone https://github.com/ffzg/ffzg-kernel-3.10.git\\ngit checkout ${GITVERSION}" > $(headers_tmp)/usr/share/doc/${HDRPACKAGE}/SOURCE
 	gzip -f --best $(headers_tmp)/usr/share/doc/${HDRPACKAGE}/changelog.Debian
 	install -m 0644 ${KERNEL_SRC}/.config $(headers_dir)
 	install -m 0644 ${KERNEL_SRC}/Module.symvers $(headers_dir)
@@ -292,7 +293,7 @@ ${FW_DEB} fw: control.firmware linux-firmware.git/WHENCE dvb-firmware.git/README
 	cp linux-firmware.git/LICEN[CS]E* fwdata/usr/share/doc/pve-firmware/licenses
 	install -D -m 0644 changelog.firmware fwdata/usr/share/doc/pve-firmware/changelog.Debian
 	gzip -9 fwdata/usr/share/doc/pve-firmware/changelog.Debian
-	echo "git clone git://git.proxmox.com/git/pve-kernel-2.6.32.git\\ngit checkout ${GITVERSION}" >fwdata/usr/share/doc/pve-firmware/SOURCE
+	echo "git clone https://github.com/ffzg/ffzg-kernel-3.10.git\\ngit checkout ${GITVERSION}" >fwdata/usr/share/doc/pve-firmware/SOURCE
 	install -d fwdata/DEBIAN
 	sed -e 's/@VERSION@/${FW_VER}-${FW_REL}/' <control.firmware >fwdata/DEBIAN/control
 	dpkg-deb --build fwdata ${FW_DEB}

@@ -1,3 +1,11 @@
+linux-image-3.10.0 (3.10.0-6) unstable; urgency=low
+
+  * add latest drbd module (8.4.4)
+
+  * change package name to accommodate other debian utils
+
+ -- Luka Blaskovic <lblasc@znode.net>  Sat, 01 Feb 2014 22:04:13 +0100
+
 pve-kernel-3.10.0 (3.10.0-5) unstable; urgency=low
 
   * set CONFIG_BRIDGE=y

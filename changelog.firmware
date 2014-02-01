@@ -1,3 +1,9 @@
+ffzg-firmware (1.1-2) unstable; urgency=low
+
+  * rename for our organization
+
+ -- Luka Blaskovic <lblasc@znode.net>  Sat, 01 Feb 2014 22:04:13 +0100
+
 pve-firmware (1.1-1) unstable; urgency=low
 
   * include files for RHEL7 kernel
