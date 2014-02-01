@@ -30,6 +30,9 @@ FW_VER=1.1
 FW_REL=1
 FW_DEB=pve-firmware_${FW_VER}-${FW_REL}_all.deb
 
+DRBDDIR=drbd-8.4.4
+DRBDSRC=${DRBDDIR}.tar.gz
+
 E1000EDIR=e1000e-2.5.4
 E1000ESRC=${E1000EDIR}.tar.gz
 
@@ -90,13 +93,15 @@ fwlist-${KVNAME}: data
 	./find-firmware.pl data/lib/modules/${KVNAME} >fwlist.tmp
 	mv fwlist.tmp $@
 
-data: .compile_mark ${KERNEL_CFG} e1000e.ko igb.ko ixgbe.ko bnx2.ko cnic.ko bnx2x.ko aacraid.ko arcmsr.ko
+data: .compile_mark ${KERNEL_CFG} drbd.ko e1000e.ko igb.ko ixgbe.ko bnx2.ko cnic.ko bnx2x.ko aacraid.ko arcmsr.ko
 	rm -rf data tmp; mkdir -p tmp/lib/modules/${KVNAME}
 	mkdir tmp/boot
 	install -m 644 ${KERNEL_CFG} tmp/boot/config-${KVNAME}
 	install -m 644 ${KERNEL_SRC}/System.map tmp/boot/System.map-${KVNAME}
 	install -m 644 ${KERNEL_SRC}/arch/x86_64/boot/bzImage tmp/boot/vmlinuz-${KVNAME}
 	cd ${KERNEL_SRC}; make INSTALL_MOD_PATH=../tmp/ modules_install
+	# install latest drbd driver
+	install -m 644 drbd.ko tmp/lib/modules/${KVNAME}/kernel/drivers/block/drbd/
 	# install latest ixgbe driver
 	install -m 644 ixgbe.ko tmp/lib/modules/${KVNAME}/kernel/drivers/net/ethernet/intel/ixgbe/
 	# install latest e1000e driver
@@ -170,6 +175,15 @@ ${RHKERSRCDIR}/kernel.spec: ${KERNELSRCRPM}
 #	cp ${RR272XDIR}/product/rr272x/linux/$@ .
 
 
+drbd.ko drbd: .compile_mark ${DRBDSRC}
+	rm -rf ${DRBDDIR}
+	tar xvf ${DRBDSRC}
+	mkdir -p /lib/modules/${KVNAME}
+	ln -sf ${TOP}/${KERNEL_SRC} /lib/modules/${KVNAME}/build
+	cd ${DRBDDIR}; ./configure --prefix=/usr --localstatedir=/var --sysconfdir=/etc --with-km	
+	cd ${DRBDDIR}; make KDIR=${TOP}/${KERNEL_SRC}
+	cp ${DRBDDIR}/drbd/drbd.ko drbd.ko
+	
 aacraid.ko: .compile_mark ${AACRAIDSRC}
 	rm -rf ${AACRAIDDIR}
 	tar xzf ${AACRAIDSRC}
