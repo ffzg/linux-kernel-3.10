@@ -34,7 +34,7 @@ FIRMWARE:
 =========
 
 We create our own firmware package, which includes the firmware for
-all proxmox-ve kernels. So far this include
+all proxmox-ve kernels. So far this includes:
 
 pve-kernel-2.6.18
 pve-kernel-2.6.24
@@ -42,12 +42,12 @@ pve-kernel-2.6.32
 pve-kernel-2.6.35
 pve-kernel-3.10.0
 
-We use 'find-firmware.pl' to extract lists of required firmeware
+We use 'find-firmware.pl' to extract lists of required firmware
 files.  The script 'assemble-firmware.pl' is used to read those lists
-and copy the files from various source directory into a target
+and copy the files from various source directories into a target
 directory.
 
-We do not include firmeware for some wireless HW when there is a
+We do not include firmware for some wireless HW when there is a
 separate debian package for that, for example:
 
 zd1211-firmware
@@ -70,12 +70,12 @@ Additional information
 ----------------------
 
 We use the default configuration provided by RHEL, and apply
-the following modification:
+the following modifications:
 
 see config-3.10.0.diff
 
 - enable common CONFIG_BLK_DEV_XXX to avoid hardware detection
-  problems (udev, undate-initramfs hav serious problems without that)
+  problems (udev, update-initramfs have serious problems without that)
 
   	 CONFIG_BLK_DEV_SD=y
   	 CONFIG_BLK_DEV_SR=y
@@ -83,7 +83,7 @@ see config-3.10.0.diff
 
 - disable module signatures (CONFIG_MODULE_SIG)
  
-- enable IBM JFS file system 
+- enable IBM JFS file system
 
   This is disabled in RHEL kernel for no real reason, so we enable
   it as requested by users (bug #64)
