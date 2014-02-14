@@ -14,7 +14,7 @@ my $version = "@@KVNAME@@";
 
 system("depmod $version");
 
-system("update-initramfs -c -t -b $imagedir -k $version"); 
+system("INITRAMFS_TOOLS_KERNEL_HOOK=yes update-initramfs -c -t -b $imagedir -k $version"); 
 
 if (-x "/usr/sbin/update-grub") {
     system("/usr/sbin/update-grub");

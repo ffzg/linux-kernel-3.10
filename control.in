@@ -4,7 +4,7 @@ Section: admin
 Priority: optional
 Architecture: amd64
 Provides: linux-image, linux-image-2.6
-Suggests: pve-firmware
+Suggests: ffzg-firmware
 Depends: grub-pc | grub-efi-amd64, initramfs-tools, busybox
 Maintainer: Luka Blaskovic <lblasc@znode.net>
 Description: FFZG kernel
