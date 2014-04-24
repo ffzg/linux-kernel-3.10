@@ -17,10 +17,11 @@ Additional/Updated Modules:
 
 - include latest e1000e driver from intel/sourceforge
 
-- include latest Broadcom bnx2 drivers
-
-  * original file linux-7.8.56.zip contains
-    netxtreme2-7.8.56.tar.gz (added to repository)
+# this driver does not compile with RHEL7 kernel
+#- include latest Broadcom bnx2 drivers
+#
+#  * original file linux-7.8.56.zip contains
+#    netxtreme2-7.8.56.tar.gz (added to repository)
 
 - include latest Adaptec aacraid driver
 
@@ -102,6 +103,17 @@ see config-3.10.0.diff
 
   Use same SELINUX config as debian kernels (CONFIG_DEFAULT_SECURITY_DAC=y)
 
+- set CONFIG_CPU_FREQ_DEFAULT_GOV_PERFORMANCE=y
+
+  because if not set, it can give some dynamic memory or cpu frequencies 
+  change, and vms can crash (mainly windows guest).
+
+  see http://forum.proxmox.com/threads/18238-Windows-7-x64-VMs-crashing-randomly-during-process-termination?p=93273#post93273
+
+- set CONFIG_CC_STACKPROTECTOR_REGULAR=y
+
+  gcc on debian wheezy does not supportCONFIG_CC_STACKPROTECTOR_STRONG
+ 
 # Note: enable now for testing
 #- disable CONFIG_BRIDGE_IGMP_SNOOPING 
 #
@@ -118,5 +130,5 @@ see config-3.10.0.diff
 Testing final kernel with kvm
 -----------------------------
 
-kvm -kernel data/boot/vmlinuz-3.10.0-1-pve -initrd initrd.img-3.10.0-1-pve -append "vga=791 video=vesafb:ywrap,mtrr" /dev/zero
+kvm -kernel data/boot/vmlinuz-3.10.0-2-pve -initrd initrd.img-3.10.0-2-pve -append "vga=791 video=vesafb:ywrap,mtrr" /dev/zero
 

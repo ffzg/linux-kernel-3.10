@@ -1,3 +1,11 @@
+ffzg-firmware (1.1-3) unstable; urgency=low
+
+  * pull latest proxmox fixes
+    - include missing firmware rtl8168g-1.fw
+    - updates for latest 3.10.0 kernel
+
+ -- Luka Blaskovic <lblasc@znode.net>  Thu, 24 Apr 2014 10:38:20 +0000
+
 ffzg-firmware (1.1-2) unstable; urgency=low
 
   * rename for our organization

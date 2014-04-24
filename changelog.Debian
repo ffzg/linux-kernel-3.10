@@ -1,3 +1,17 @@
+linux-image-3.10.0 (3.10.0-7) unstable; urgency=low
+
+  * pull proxmox fixes
+    - update to kernel-3.10.0-121.el7.src.rpm
+    - remove net-core-always-propagate-flag-changes.patch (upstream)
+    - bump kernel version to 3.10.0-2-pve
+    - use bnx2 from upstream (Broadcom bnx2 drivers does not compile)
+    - update e1000e to 3.0.4.1
+    - update igb to 5.1.2
+    - update ixgbe to 3.19.1
+    - set CONFIG_CPU_FREQ_DEFAULT_GOV_PERFORMANCE=y
+
+ -- Luka Blaskovic <lblasc@znode.net>  Thu, 24 Apr 2014 10:44:03 +0000
+
 linux-image-3.10.0 (3.10.0-6) unstable; urgency=low
 
   * add latest drbd module (8.4.4)
