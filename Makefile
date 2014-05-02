@@ -1,12 +1,12 @@
-RELEASE=3.1
+RELEASE=3.2
 
 KERNEL_VER=3.10.0
-PKGREL=6
+PKGREL=7
 # also include firmware of previous versrion into 
 # the fw package:  fwlist-2.6.32-PREV-pve
-KREL=1
+KREL=2
 
-RHKVER=54.0.1.el7
+RHKVER=121.el7
 
 KERNELSRCRPM=kernel-${KERNEL_VER}-${RHKVER}.src.rpm
 
@@ -28,21 +28,22 @@ KERNEL_CFG=config-${KERNEL_VER}
 KERNEL_CFG_ORG=${RHKERSRCDIR}/kernel-${KERNEL_VER}-x86_64.config
 
 FW_VER=1.1
-FW_REL=1
+FW_REL=2
 FW_DEB=ffzg-firmware_${FW_VER}-${FW_REL}_all.deb
 
 DRBDDIR=drbd-8.4.4
 DRBDSRC=${DRBDDIR}.tar.gz
 
-E1000EDIR=e1000e-2.5.4
+E1000EDIR=e1000e-3.0.4.1
 E1000ESRC=${E1000EDIR}.tar.gz
 
-IGBDIR=igb-5.0.6
+IGBDIR=igb-5.1.2
 IGBSRC=${IGBDIR}.tar.gz
 
-IXGBEDIR=ixgbe-3.18.7
+IXGBEDIR=ixgbe-3.19.1
 IXGBESRC=${IXGBEDIR}.tar.gz
 
+# this does not compile correctly
 BNX2DIR=netxtreme2-7.8.56
 BNX2SRC=${BNX2DIR}.tar.gz
 
@@ -73,7 +74,7 @@ PVE_DEB=${PVEPKG}_${RELEASE}-${PKGREL}_all.deb
 all: check_gcc ${DST_DEB} ${FW_DEB} ${HDR_DEB}
 
 check_gcc: 
-	gcc --version|grep "4.7.2" || false
+	gcc --version|grep "4\.7\.2" || false
 
 ${DST_DEB}: data control.in postinst.in copyright changelog.Debian
 	mkdir -p data/DEBIAN
@@ -94,7 +95,8 @@ fwlist-${KVNAME}: data
 	./find-firmware.pl data/lib/modules/${KVNAME} >fwlist.tmp
 	mv fwlist.tmp $@
 
-data: .compile_mark ${KERNEL_CFG} drbd.ko e1000e.ko igb.ko ixgbe.ko bnx2.ko cnic.ko bnx2x.ko aacraid.ko arcmsr.ko
+# fixme: bnx2.ko cnic.ko bnx2x.ko
+data: .compile_mark ${KERNEL_CFG} drbd.ko e1000e.ko igb.ko ixgbe.ko aacraid.ko arcmsr.ko
 	rm -rf data tmp; mkdir -p tmp/lib/modules/${KVNAME}
 	mkdir tmp/boot
 	install -m 644 ${KERNEL_CFG} tmp/boot/config-${KVNAME}
@@ -109,10 +111,10 @@ data: .compile_mark ${KERNEL_CFG} drbd.ko e1000e.ko igb.ko ixgbe.ko bnx2.ko cnic
 	install -m 644 e1000e.ko tmp/lib/modules/${KVNAME}/kernel/drivers/net/ethernet/intel/e1000e/
 	# install latest ibg driver
 	install -m 644 igb.ko tmp/lib/modules/${KVNAME}/kernel/drivers/net/ethernet/intel/igb/
-	# install bnx2 drivers
-	install -m 644 bnx2.ko tmp/lib/modules/${KVNAME}/kernel/drivers/net/ethernet/broadcom/
-	install -m 644 cnic.ko tmp/lib/modules/${KVNAME}/kernel/drivers/net/ethernet/broadcom/
-	install -m 644 bnx2x.ko tmp/lib/modules/${KVNAME}/kernel/drivers/net/ethernet/broadcom/bnx2x/
+	## install bnx2 drivers
+	#install -m 644 bnx2.ko tmp/lib/modules/${KVNAME}/kernel/drivers/net/ethernet/broadcom/
+	#install -m 644 cnic.ko tmp/lib/modules/${KVNAME}/kernel/drivers/net/ethernet/broadcom/
+	#install -m 644 bnx2x.ko tmp/lib/modules/${KVNAME}/kernel/drivers/net/ethernet/broadcom/bnx2x/
 	# install aacraid drivers
 	install -m 644 aacraid.ko tmp/lib/modules/${KVNAME}/kernel/drivers/scsi/aacraid/
 	## install Highpoint 2710 RAID driver
@@ -141,7 +143,6 @@ ${KERNEL_CFG}: ${KERNEL_CFG_ORG} config-${KERNEL_VER}.diff
 ${KERNEL_SRC}/README: ${KERNEL_SRC}.org/README
 	rm -rf ${KERNEL_SRC}
 	cp -a ${KERNEL_SRC}.org ${KERNEL_SRC}
-	cd ${KERNEL_SRC}; patch -p1 <../net-core-always-propagate-flag-changes.patch
 	#cd ${KERNEL_SRC}; patch -p1 <../bootsplash-3.8.diff
 	#cd ${KERNEL_SRC}; patch -p1 <../${RHKERSRCDIR}/patch-042stab083
 	#cd ${KERNEL_SRC}; patch -p1 <../do-not-use-barrier-on-ext3.patch
@@ -273,7 +274,7 @@ dvb-firmware.git/README:
 linux-firmware.git/WHENCE:
 	git clone git://git.kernel.org/pub/scm/linux/kernel/git/firmware/linux-firmware.git linux-firmware.git
 
-${FW_DEB} fw: control.firmware linux-firmware.git/WHENCE dvb-firmware.git/README changelog.firmware fwlist-2.6.18-2-pve fwlist-2.6.24-12-pve fwlist-2.6.32-3-pve fwlist-2.6.32-4-pve fwlist-2.6.32-6-pve fwlist-2.6.35-1-pve fwlist-2.6.32-13-pve fwlist-2.6.32-14-pve fwlist-2.6.32-20-pve fwlist-${KVNAME}
+${FW_DEB} fw: control.firmware linux-firmware.git/WHENCE dvb-firmware.git/README changelog.firmware fwlist-2.6.18-2-pve fwlist-2.6.24-12-pve fwlist-2.6.32-3-pve fwlist-2.6.32-4-pve fwlist-2.6.32-6-pve fwlist-2.6.35-1-pve fwlist-2.6.32-13-pve fwlist-2.6.32-14-pve fwlist-2.6.32-20-pve fwlist-2.6.32-21-pve fwlist-${KVNAME}
 	rm -rf fwdata
 	mkdir -p fwdata/lib/firmware
 	./assemble-firmware.pl fwlist-${KVNAME} fwdata/lib/firmware
@@ -287,6 +288,7 @@ ${FW_DEB} fw: control.firmware linux-firmware.git/WHENCE dvb-firmware.git/README
 	./assemble-firmware.pl fwlist-2.6.32-13-pve fwdata/lib/firmware
 	./assemble-firmware.pl fwlist-2.6.32-14-pve fwdata/lib/firmware
 	./assemble-firmware.pl fwlist-2.6.32-20-pve fwdata/lib/firmware
+	./assemble-firmware.pl fwlist-2.6.32-21-pve fwdata/lib/firmware
 	install -d fwdata/usr/share/doc/pve-firmware
 	cp linux-firmware.git/WHENCE fwdata/usr/share/doc/pve-firmware/README
 	install -d fwdata/usr/share/doc/pve-firmware/licenses
