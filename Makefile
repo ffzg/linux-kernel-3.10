@@ -1,12 +1,12 @@
 RELEASE=3.2
 
 KERNEL_VER=3.10.0
-PKGREL=7
+PKGREL=11
 # also include firmware of previous versrion into 
 # the fw package:  fwlist-2.6.32-PREV-pve
-KREL=2
+KREL=3
 
-RHKVER=121.el7
+RHKVER=123.el7
 
 KERNELSRCRPM=kernel-${KERNEL_VER}-${RHKVER}.src.rpm
 
@@ -31,13 +31,13 @@ FW_VER=1.1
 FW_REL=2
 FW_DEB=ffzg-firmware_${FW_VER}-${FW_REL}_all.deb
 
-DRBDDIR=drbd-8.4.4
+DRBDDIR=drbd-8.4.5
 DRBDSRC=${DRBDDIR}.tar.gz
 
 E1000EDIR=e1000e-3.0.4.1
 E1000ESRC=${E1000EDIR}.tar.gz
 
-IGBDIR=igb-5.1.2
+IGBDIR=igb-5.2.5
 IGBSRC=${IGBDIR}.tar.gz
 
 IXGBEDIR=ixgbe-3.19.1
@@ -153,6 +153,7 @@ ${KERNEL_SRC}/README: ${KERNEL_SRC}.org/README
 	#cd ${KERNEL_SRC}; patch -p1 <../add-tiocgdev-ioctl.patch
 	#cd ${KERNEL_SRC}; patch -p1 <../fix-nfs-block-count.patch
 	#cd ${KERNEL_SRC}; patch -p1 <../fix-idr-header-for-drbd-compilation.patch
+	cd ${KERNEL_SRC}; patch -p1 <../n_tty-Fix-n_tty_write-crash-when-echoing-in-raw-mode.patch
 	sed -i ${KERNEL_SRC}/Makefile -e 's/^EXTRAVERSION.*$$/EXTRAVERSION=${EXTRAVERSION}/'
 	touch $@
 
@@ -182,7 +183,6 @@ drbd.ko drbd: .compile_mark ${DRBDSRC}
 	tar xvf ${DRBDSRC}
 	mkdir -p /lib/modules/${KVNAME}
 	ln -sf ${TOP}/${KERNEL_SRC} /lib/modules/${KVNAME}/build
-	cd ${DRBDDIR}; ./configure --prefix=/usr --localstatedir=/var --sysconfdir=/etc --with-km	
 	cd ${DRBDDIR}; make KDIR=${TOP}/${KERNEL_SRC}
 	cp ${DRBDDIR}/drbd/drbd.ko drbd.ko
 	

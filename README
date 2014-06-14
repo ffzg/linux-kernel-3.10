@@ -82,6 +82,13 @@ see config-3.10.0.diff
   	 CONFIG_BLK_DEV_SR=y
   	 CONFIG_BLK_DEV_DM=y
 
+- compile NBD and RBD modules
+	 CONFIG_BLK_DEV_NBD=m
+	 CONFIG_BLK_DEV_RBD=m
+
+- set LOOP_MIN_COUNT to 8 (debian defaults)
+	 CONFIG_BLK_DEV_LOOP_MIN_COUNT=8
+
 - disable module signatures (CONFIG_MODULE_SIG)
  
 - enable IBM JFS file system
@@ -93,6 +100,8 @@ see config-3.10.0.diff
 
   This is disabled in RHEL kernel for no real reason, so we enable
   it as requested by users
+
+- enable CONFIG_BCACHE=m (requested by user)
 
 - enable CONFIG_BRIDGE=y
 
