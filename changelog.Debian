@@ -1,3 +1,12 @@
+linux-image-3.10.0 (3.10.0-11) unstable; urgency=low
+  
+  * merge with proxmox
+    - update to kernel-3.10.0-123.el7.src.rpm
+    - add fix for CVE-2014-0196
+    - enable BCACHE
+    - compile NBD and RBD modules
+    - set CONFIG_BLK_DEV_LOOP_MIN_COUNT=8
+
 linux-image-3.10.0 (3.10.0-7) unstable; urgency=low
 
   * pull proxmox fixes

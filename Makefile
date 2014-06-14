@@ -1,12 +1,12 @@
 RELEASE=3.2
 
 KERNEL_VER=3.10.0
-PKGREL=7
+PKGREL=11
 # also include firmware of previous versrion into 
 # the fw package:  fwlist-2.6.32-PREV-pve
-KREL=2
+KREL=3
 
-RHKVER=121.el7
+RHKVER=123.el7
 
 KERNELSRCRPM=kernel-${KERNEL_VER}-${RHKVER}.src.rpm
 
@@ -153,6 +153,7 @@ ${KERNEL_SRC}/README: ${KERNEL_SRC}.org/README
 	#cd ${KERNEL_SRC}; patch -p1 <../add-tiocgdev-ioctl.patch
 	#cd ${KERNEL_SRC}; patch -p1 <../fix-nfs-block-count.patch
 	#cd ${KERNEL_SRC}; patch -p1 <../fix-idr-header-for-drbd-compilation.patch
+	cd ${KERNEL_SRC}; patch -p1 <../n_tty-Fix-n_tty_write-crash-when-echoing-in-raw-mode.patch
 	sed -i ${KERNEL_SRC}/Makefile -e 's/^EXTRAVERSION.*$$/EXTRAVERSION=${EXTRAVERSION}/'
 	touch $@
 
