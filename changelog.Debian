@@ -1,6 +1,7 @@
 linux-image-3.10.0 (3.10.0-12) unstable; urgency=low
   
   * update drbd module to version 8.4.5
+  * update igb module to version 5.2.5
    
  -- Luka Blaskovic <lblasc@znode.net>  Sat, 14 Jun 2014 09:11:45 +0000
 
