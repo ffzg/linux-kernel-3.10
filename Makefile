@@ -31,7 +31,7 @@ FW_VER=1.1
 FW_REL=2
 FW_DEB=ffzg-firmware_${FW_VER}-${FW_REL}_all.deb
 
-DRBDDIR=drbd-8.4.4
+DRBDDIR=drbd-8.4.5
 DRBDSRC=${DRBDDIR}.tar.gz
 
 E1000EDIR=e1000e-3.0.4.1
@@ -183,7 +183,6 @@ drbd.ko drbd: .compile_mark ${DRBDSRC}
 	tar xvf ${DRBDSRC}
 	mkdir -p /lib/modules/${KVNAME}
 	ln -sf ${TOP}/${KERNEL_SRC} /lib/modules/${KVNAME}/build
-	cd ${DRBDDIR}; ./configure --prefix=/usr --localstatedir=/var --sysconfdir=/etc --with-km	
 	cd ${DRBDDIR}; make KDIR=${TOP}/${KERNEL_SRC}
 	cp ${DRBDDIR}/drbd/drbd.ko drbd.ko
 	
