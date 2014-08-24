@@ -1,3 +1,21 @@
+linux-image-3.10.0 (3.10.0-13) unstable; urgency=low
+
+  * merge with proxmox
+    - allow grub-efi-ia32 boot loader
+    - update to kernel-3.10.0-123.6.3.el7.src.rpm
+    - remove patch n_tty-Fix-n_tty_write-crash-when-echoing-in-raw-mode.patch 
+      (now upstream)
+    - gpu passthrough: add override_for_missing_acs_capabilities.patch,
+      needed for some radeon cards.
+    - update e1000e to 3.1.0.2
+    - update igb to 5.2.9.4
+    - update ixgbe to 3.21.2
+    - update arcmsr to 1.30.0X.19-140509
+    - recompile to enable vfio xfga
+    - fix bug #292: add postrm file for cleanup
+
+ -- Luka Blaskovic <lblasc@znode.net>  Sun, 24 Aug 2014 22:41:47 +0000
+
 linux-image-3.10.0 (3.10.0-12) unstable; urgency=low
   
   * update drbd module to version 8.4.5

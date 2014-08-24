@@ -5,7 +5,7 @@ Priority: optional
 Architecture: amd64
 Provides: linux-image, linux-image-2.6
 Suggests: ffzg-firmware
-Depends: grub-pc | grub-efi-amd64, initramfs-tools, busybox
+Depends: grub-pc | grub-efi-amd64 | grub-efi-ia32, initramfs-tools, busybox
 Maintainer: Luka Blaskovic <lblasc@znode.net>
 Description: FFZG kernel
  This package contains the linux kernel and initial ramdisk used for booting
