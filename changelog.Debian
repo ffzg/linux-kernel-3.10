@@ -1,3 +1,13 @@
+linux-image-3.10.0 (3.10.0-14) unstable; urgency=low
+
+  * don't bump kernel version (leave KREL=4)
+  * merge with proxmox
+    - update to kernel-3.10.0-123.8.1.el7.src.rpm
+    - tg3: Fix deadlock in tg3_change_mtu 
+      (patch tg3-fix-deadlock_in_tg3_change_mtu.patch)
+
+ -- Luka Blaskovic <lblasc@znode.net>  Thu, 23 Oct 2014 13:24:54 +0000
+
 linux-image-3.10.0 (3.10.0-13) unstable; urgency=low
 
   * merge with proxmox
