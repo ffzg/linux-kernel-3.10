@@ -1,5 +1,6 @@
 linux-image-3.10.0 (3.10.0-14) unstable; urgency=low
 
+  * backport zram up to 3.18
   * don't bump kernel version (leave KREL=4)
   * merge with proxmox
     - update to kernel-3.10.0-123.8.1.el7.src.rpm

@@ -169,6 +169,7 @@ ${KERNEL_SRC}/README: ${KERNEL_SRC}.org/README
 	cd ${KERNEL_SRC}; patch -p1 <../add-empty-ndo_poll_controller-to-veth.patch
 	cd ${KERNEL_SRC}; patch -p1 <../override_for_missing_acs_capabilities.patch
 	cd ${KERNEL_SRC}; patch -p1 <../tg3-fix-deadlock_in_tg3_change_mtu.patch
+	cd ${KERNEL_SRC}; patch -p1 <../zram-backports-3.10.patch
 	sed -i ${KERNEL_SRC}/Makefile -e 's/^EXTRAVERSION.*$$/EXTRAVERSION=${EXTRAVERSION}/'
 	touch $@
 
