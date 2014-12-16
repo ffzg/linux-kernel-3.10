@@ -1,3 +1,10 @@
+linux-image-3.10.0 (3.10.0-15) unstable; urgency=low
+  
+  * merge with proxmox
+    - update to kernel-3.10.0-123.9.3.el7.src.rpm
+   
+ -- Luka Blaskovic <lblasc@znode.net>  Tue, 16 Dec 2014 10:29:31 +0000
+
 linux-image-3.10.0 (3.10.0-14) unstable; urgency=low
 
   * backport zram up to 3.18
