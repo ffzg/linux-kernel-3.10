@@ -19,8 +19,8 @@ Additional/Updated Modules:
 
  include latest Broadcom bnx2 drivers: http://driverdownloads.qlogic.com/
 
-  * original file linux-7.10.14.zip contains
-    netxtreme2-7.10.14.tar.gz (added to repository)
+  * original file linux-7.11.05.zip contains
+    netxtreme2-7.11.05.tar.gz (added to repository)
 
 - include latest Adaptec aacraid driver
 
@@ -73,6 +73,8 @@ We use the default configuration provided by RHEL, and apply
 the following modifications:
 
 see config-3.10.0.diff
+
+- enable CONFIG_CEPH_FS=m (request from user)
 
 - enable common CONFIG_BLK_DEV_XXX to avoid hardware detection
   problems (udev, update-initramfs have serious problems without that)

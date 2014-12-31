@@ -1,12 +1,12 @@
 RELEASE=3.3
 
 KERNEL_VER=3.10.0
-PKGREL=20
+PKGREL=24
 # also include firmware of previous versrion into 
 # the fw package:  fwlist-2.6.32-PREV-pve
 KREL=4
 
-RHKVER=123.9.3.el7
+RHKVER=123.13.2.el7
 
 KERNELSRCRPM=kernel-${KERNEL_VER}-${RHKVER}.src.rpm
 
@@ -37,13 +37,13 @@ DRBDSRC=${DRBDDIR}.tar.gz
 E1000EDIR=e1000e-3.1.0.2
 E1000ESRC=${E1000EDIR}.tar.gz
 
-IGBDIR=igb-5.2.9.4
+IGBDIR=igb-5.2.15
 IGBSRC=${IGBDIR}.tar.gz
 
-IXGBEDIR=ixgbe-3.21.2
+IXGBEDIR=ixgbe-3.23.2
 IXGBESRC=${IXGBEDIR}.tar.gz
 
-BNX2DIR=netxtreme2-7.10.14
+BNX2DIR=netxtreme2-7.11.05
 BNX2SRC=${BNX2DIR}.tar.gz
 
 AACRAIDVER=1.2.1-40700

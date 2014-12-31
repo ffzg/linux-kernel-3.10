@@ -1,3 +1,9 @@
+ffzg-firmware (1.1-5) unstable; urgency=low
+  
+  * bump version
+   
+ -- Luka Blaskovic <lblasc@znode.net>  Wed, 31 Dec 2014 15:31:46 +0000
+
 ffzg-firmware (1.1-4) unstable; urgency=low
 
   * pull latest proxmox patches
